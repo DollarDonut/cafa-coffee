@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafa</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/app.js" defer></script>
+    <script src="/js/cafa.js" defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&family=Nunito:ital,wght@0,500;1,500&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <img src="/img/logo.webp" class="header__logo" alt="Logo">
+            <h1 class="header__title">Cafa</h1>
+        </div>
+        <nav class="header__nav">
+            <ul class="nav-list">
+                <li class="list-items"><a href="#"><i class="fa-solid fa-house"></i></a></li>
+                <li class="list-items"><a href="#"><i class="fa-regular fa-star"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <button class="cart" id="cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </button>
+
+    <button class="cart" id="returnbutton">
+        <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <main class="content">
+        <section class="promo-header">
+            <div class="promo-header__content">
+                <h2 class="promo-header__title">Welcome to Cafa</h2>
+                <p class="promo-header__text">Your one-stop shop for all things coffee. Explore our wide range of products and find your perfect brew.</p>
+                <button class="add-button">Shop Now</button>
+            </div>
+        </section>
+
+        <section class="card-container">
+            <% products.forEach(product => { %>
+                <article class="card">
+                    <section class="info-card">
+                        <img src="<%= product.imgSrc %>" alt="<%= product.imgAlt %>" class="card-image">
+                    </section>
+                    <section class="info-card">
+                        <h3><%= product.title %></h3>
+                        <p><%= product.description %></p>
+                        <p class="card-price">Price: €<%= (product.price / 100).toFixed(2) %></p>
+                        <button class="add-button">Add to Cart</button>
+                    </section>
+                </article>
+            <% }) %>
+        </section>
+
+        <section>
+            <h1>Featured Products</h1>
+
+            <section class="info-card">
+                <p>Experience the rich flavors of our limited edition coffee beans, sourced from the finest farms.</p>
+                <p class="card-price">Price: €12.99</p>
+        </section>
+    </main>
+
+    <form class="checkoutWindow" method="POST" id="checkoutForm">
+        <div class="checkoutWindow__content">
+            <h2 class="checkoutWindow__title">Checkout</h2>
+            <div class="checkoutWindow__items">
+                <div class="checkoutWindow__item">
+                    <img src="/img/coffee.jpg" alt="Coffee Product" class="checkoutWindow__item-image">
+                    <div class="checkoutWindow__item-details">
+                        <h3 class="checkoutWindow__item-title">Dark Roast</h3>
+                        <p class="checkoutWindow__item-price"></p>
+                        <button class="add-button remove--button">Remove</button>
+                    </div>
+                </div>
+                <div class="checkoutWindow__item">
+                    <img src="/img/coffee.jpg" alt="Coffee Product" class="checkoutWindow__item-image">
+                    <div class="checkoutWindow__item-details">
+                        <h3 class="checkoutWindow__item-title">Medium Roast</h3>
+                        <p class="checkoutWindow__item-price"></p>
+                        <button class="add-button remove--button">Remove</button>
+                    </div>
+                </div>
+            </div>
+            <div class="checkoutWindow__total">
+                <span>Total: €0.00</span>
+                <button class="add-button" id="payButton" type="button">Checkout</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
