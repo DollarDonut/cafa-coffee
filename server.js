@@ -62,6 +62,55 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 });
 
+
+app.get('/cancel', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Payment Cancelled</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex items-center justify-center h-screen bg-orange-100 text-center text-red-600">
+      <div>
+        <h1 class="text-3xl font-semibold mb-4">Payment Cancelled</h1>
+        <p class="mb-6">Please try again later.</p>
+        <a href="/" class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+          Return to Home
+        </a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+app.get('/success', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Payment Success</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex items-center justify-center h-screen bg-orange-100 text-center text-red-600">
+      <div>
+        <h1 class="text-3xl font-semibold mb-4">Payment Complete</h1>
+        <p class="mb-6">Thank you for your purchase.</p>
+        <a href="/" class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+          Return to Home
+        </a>
+      </div>
+    </body>
+    </html>
+  `);
+});
+
+
+
 app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.render('cancel'));
 

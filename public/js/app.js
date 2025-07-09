@@ -1,4 +1,3 @@
-// --- FRONTEND CODE (Runs in Browser) --- //
 const header = document.getElementsByClassName('header');
 console.log(header);
 const cardcontainer = document.getElementsByClassName('card-container');
@@ -11,17 +10,13 @@ const removeButtons = document.querySelectorAll('.remove--button');
 const addButton = document.getElementsByClassName('add-button');
 const stripe = Stripe('pk_test_51Qe3ndFllnWu1kBSxH5mXMuuIfHDWaqTkeRzar9kjnNCBEyLI4x6qFIXpmmD4GLAPFQAVSHGgbrPMbiYbu9mSg1k00BJ3GrN4Q');
 
-header.scrollY = () => {
-    if (window.scrollY > 0) {
-       alert('header--scrolled');
-    }
-};
+console.log('header--scrolled');
 
 const cardData = [
     {
         imgSrc: './img/coffee.jpg',
-        title: 'Dark roast coffee',
-        description: 'A bold and bitter coffee experience',
+        title: 'light roast coffee',
+        description: 'A smooth and mild coffee experience',
         imgAlt: 'Coffee beans',
         Price: '€12.50'
     },
@@ -32,6 +27,21 @@ const cardData = [
         imgAlt: 'Coffee beans',
         Price: '€12.50'
     },
+    {
+        imgSrc: './img/coffee.jpg',
+        title: 'Medium Dark roast coffee',
+        description: 'A bold and bitter coffee experience',
+        imgAlt: 'Coffee beans',
+        Price: '€12.50'
+    },
+    {
+        imgSrc: './img/coffee.jpg',
+        title: 'Dark roast coffee',
+        description: 'A bold and bitter coffee experience',
+        imgAlt: 'Coffee beans',
+        Price: '€14.50'
+    },
+    
 ];
 
 if (cardcontainer.length > 0) {
@@ -90,9 +100,14 @@ checkoutButton.onclick = () => {
     }
 };
 
-addButton.onclick = function() {
-    
+for (let i = 0; i < addButton.length; i++) {
+    addButton[i].onclick = function() {
+        console.log('Add to Cart button clicked');
+    }
 }
+
+console.log(addButton);
+
 
 returnbutton.onclick = function() {
     if (mainContent.length > 0) {

@@ -25,7 +25,7 @@ body {
 
 .header--scrolled {
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    background: #e0e7ff;
+    background: var(--primary-color);
     transition: background 0.3s, box-shadow 0.3s;
 }
 
