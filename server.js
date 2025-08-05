@@ -41,7 +41,9 @@ app.post('/create-checkout-session', async (req, res) => {
   }));
 
   try {
-    const origin = req.headers.origin || 'http://localhost:3000';
+    const allowedOrigin = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
+  const origin = req.headers.origin || allowedOrigin;
+
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card', 'sepa_debit'],
