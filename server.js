@@ -1,9 +1,10 @@
-
 require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const products = require('./data/products');
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); 
@@ -11,55 +12,50 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-const products = [
-    {
-        imgSrc: '/img/coffee.jpg',
-        title: 'Dark roast coffee',
-        description: 'A bold and bitter coffee experience',
-        imgAlt: 'Coffee beans',
-        price: 1250
-    },
-    {
-        imgSrc: '/img/coffee.jpg',
-        title: 'Medium roast coffee',
-        description: 'A nice balance of flavor and strength',
-        imgAlt: 'Coffee beans',
-        price: 1250
-    }
-];
 
 app.get('/', (req, res) => {
     res.render('index', { products });
 });
 
+app.get('/api/products', (req, res) => {
+  res.json(products);
+});
+
+
+
 app.post('/create-checkout-session', async (req, res) => {
-    try {
-        const origin = req.headers.origin || 'http://localhost:3000';
+  const { cart } = req.body;
+  console.log('Cart received:', cart);
 
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'eur',
-                        product_data: {
-                            name: 'Coffee',
-                        },
-                        unit_amount: 1000
-                    },
-                    quantity: 1
-                }
-            ],
-            mode: 'payment',
-            success_url: `${origin}/success`,
-            cancel_url: `${origin}/cancel`
-        });
+  if (!Array.isArray(cart) || cart.length === 0) {
+    return res.status(400).json({ error: 'Cart must be a non-empty array' });
+  }
 
-        res.status(200).json({ id: session.id });
-    } catch (err) {
-        console.error('Stripe error:', err);
-        res.status(500).send('Internal Server Error');
-    }
+  const line_items = cart.map(item => ({
+    price_data: {
+      currency: 'eur',
+      product_data: { name: item.name },
+      unit_amount: item.price,
+    },
+    quantity: item.quantity,
+  }));
+
+  try {
+    const origin = req.headers.origin || 'http://localhost:3000';
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card', 'sepa_debit'],
+      line_items: line_items,
+      mode: 'payment',
+      success_url: `${origin}/success`,
+      cancel_url: `${origin}/cancel`
+    });
+
+    res.status(200).json({ id: session.id });
+  } catch (err) {
+    console.error('Stripe error:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 

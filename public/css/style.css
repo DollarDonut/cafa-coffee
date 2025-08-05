@@ -1,5 +1,5 @@
 :root{
-    --primary-color: #fdebcb;
+    --primary-color: #edc47e;
     --secondary-color: #cda24d;
     --side-color: #fef8eb;
 }
@@ -138,6 +138,34 @@ body {
     color: var(--primary-color);
     border: 3px solid var(--primary-color);
     transition: 0.6s;
+}
+
+.addToCart{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.added{
+    background-color: var(--side-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 14rem;
+    height: 6rem;
+    position: fixed;
+    top: 17rem;
+    right: 13rem;
+    display: none;
 }
 
 .checkoutWindow{
